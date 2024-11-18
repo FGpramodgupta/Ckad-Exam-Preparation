@@ -1,0 +1,185 @@
+
+
+----------------------------------------- PODS ----------------------------------------------------------
+
+## create pods 
+kubectl run pramod_nginx --image=nginx 
+
+
+
+kubectl logs pramod_nginx
+
+kubectl describe pods pramod_nginx
+
+## Other way to create pods 
+kubectl create pod pramod_nginx --image=nginx
+
+## Create yaml files 
+kubectl apply -f filename.yaml 
+
+#Display POds
+
+kubectl get pods 
+
+kubectl get pod pod_name -o wide
+
+kubectl get pod pod_name -o yaml
+
+kubectl get pod pod_name -o json
+
+## Desceibe pod 
+
+Kubect; describe pods pod_name
+
+## Edit pod 
+
+kubectl edit pods pod_name
+
+# Pod logs 
+
+Kubectl logs pods pod_name
+
+#Delete pod 
+
+kubectl delete pod pod_name
+
+#POD stats
+
+kubectl top pods
+
+
+kubectl top pods --sort-by cpu
+
+kubectl top pods --sort-by memory 
+
+kubectl top pods --all-namespaces --sort-by cpu
+
+kubectl top pods -A
+
+
+############ Manifest file from CLI #############################
+
+
+## generate pod yaml file
+kubectl run pramod_nginx --image=nginx  --dry-run=clinet -o yaml 
+
+## generate pod yaml file
+kubectl run pramod_nginx --image=nginx  --dry-run=clinet -o yaml > pramod_nginx.yaml
+
+## Enter into container
+kubectl exec -it podname bash
+
+## multiple container 
+kubectl exec -it podname -c container_name bash or sh
+
+########################################## Pod Scale ###########################################
+
+kubectl scale
+
+
+################################### Edit Pods Tips ##################################################
+
+
+Edit Pods
+A Note on Editing Existing Pods
+In any of the practical quizzes, if you are asked to edit an existing POD, please note the following:
+
+If you are given a pod definition file, edit that file and use it to create a new pod.
+
+If you are not given a pod definition file, you may extract the definition to a file using the below command:
+
+kubectl get pod <pod-name> -o yaml > pod-definition.yaml
+
+Then edit the file to make the necessary changes, delete, and re-create the pod.
+
+To modify the properties of the pod, you can utilize the kubectl edit pod <pod-name> command. Please note that only the properties listed below are editable.
+
+    spec.containers[*].image
+
+    spec.initContainers[*].image
+
+    spec.activeDeadlineSeconds
+
+    spec.tolerations
+
+    spec.terminationGracePeriodSeconds
+
+
+
+kubectl run nginx --image=nginx --dry-run=client -o yaml > nginx-pod.yaml
+
+
+# POD
+# Create an NGINX Pod
+
+kubectl run nginx --image=nginx
+
+
+Generate POD Manifest YAML file (-o yaml). Don't create it(--dry-run)
+
+kubectl run nginx --image=nginx --dry-run=client -o yaml
+
+
+
+Deployment
+Create a deployment
+
+kubectl create deployment --image=nginx nginx
+
+
+
+Generate Deployment YAML file (-o yaml). Don't create it(--dry-run)
+
+kubectl create deployment --image=nginx nginx --dry-run -o yaml
+
+
+
+Generate Deployment with 4 Replicas
+
+kubectl create deployment nginx --image=nginx --replicas=4
+
+
+
+You can also scale deployment using the kubectl scale command.
+
+kubectl scale deployment nginx --replicas=4
+
+
+
+Another way to do this is to save the YAML definition to a file and modify
+
+kubectl create deployment nginx --image=nginx--dry-run=client -o yaml > nginx-deployment.yaml
+
+
+
+You can then update the YAML file with the replicas or any other field before creating the deployment.
+
+
+
+# #####  Service
+
+Create a Service named redis-service of type ClusterIP to expose pod redis on port 6379
+
+kubectl expose pod redis --port=6379 --name redis-service --dry-run=client -o yaml
+
+(This will automatically use the pod's labels as selectors)
+
+Or
+
+kubectl create service clusterip redis --tcp=6379:6379 --dry-run=client -o yaml (This will not use the pods' labels as selectors; instead it will assume selectors as app=redis. You cannot pass in selectors as an option. So it does not work well if your pod has a different label set. So generate the file and modify the selectors before creating the service)
+
+
+
+Create a Service named nginx of type NodePort to expose pod nginx's port 80 on port 30080 on the nodes:
+
+kubectl expose pod nginx --port=80 --name nginx-service --type=NodePort --dry-run=client -o yaml
+
+(This will automatically use the pod's labels as selectors, but you cannot specify the node port. You have to generate a definition file and then add the node port in manually before creating the service with the pod.)
+
+Or
+
+kubectl create service nodeport nginx --tcp=80:80 --node-port=30080 --dry-run=client -o yaml
+
+(This will not use the pods' labels as selectors)
+
+Both the above commands have their own challenges. While one of it cannot accept a selector the other cannot accept a node port. I would recommend going with the `kubectl expose` command. If you need to specify a node port, generate a definition file using the same command and manually input the nodeport before creating the service.

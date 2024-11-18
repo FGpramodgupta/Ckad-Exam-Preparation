@@ -1,0 +1,34 @@
+
+### ----------------------------------------- Labels ----------------------------------------------------------
+
+## Display  pods labels 
+
+kubectl get pod --show-labels
+
+## Get Pods with Specific labels
+
+kubectl get pod -l key=value
+
+kubectl get pod --selector key=value
+
+
+## Add Label to Resouce 
+
+kubectl label pods [pod-name] key=value
+
+## Overwrite Pods with Specific Label.
+
+kubectl label pods [pod-name] key=value --overwrite
+
+## Remove Pod label
+
+kubectl label pods [pod-name] key-
+
+
+
+
+### ----------------------------------------- Deployments ----------------------------------------------------------
+
+kubectl create deployment redix-deployment --image redis --replicas=4 
+
+kubectl create deployment redix-deployment --image redis --replicas=4  --dry-run=client -o yaml

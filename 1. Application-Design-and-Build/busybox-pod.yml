@@ -1,0 +1,10 @@
+ind: Pod
+metadata:
+  name: busybox-pod
+speapiVersion: v1
+kc:
+  containers:
+  - name: busybox
+    image: busybox
+    
+  restartPolicy: Never

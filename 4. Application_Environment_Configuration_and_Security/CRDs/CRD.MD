@@ -1,0 +1,3 @@
+
+
+Kubcetl api-resources
