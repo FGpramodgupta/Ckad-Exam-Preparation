@@ -1,0 +1,7 @@
+NAME              STATUS   AGE
+default           Active   35d
+kube-node-lease   Active   35d
+kube-public       Active   35d
+kube-system       Active   35d
+mynamespace       Active   33d
+quota-demo        Active   28d

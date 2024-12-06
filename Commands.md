@@ -65,3 +65,5 @@ kubectl create ingress ingress-wear-watch -n app-space --rule="/wear=wear-servic
 ### Network Policy ### 
 
 Run the command: kubectl get networkpolicy or kubectl get netpol
+
+kubectl get pod | wc -l

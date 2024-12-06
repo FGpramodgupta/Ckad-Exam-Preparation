@@ -12,8 +12,6 @@ spec:
       app: nginx
   strategy:
     type: Recreate
-  strategy:
-    type: RollingUpdate
     rollingUpdate:
       maxUnavailable: 1
       maxSurge: 0        
